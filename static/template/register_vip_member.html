@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>vip升级</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #333;
+      background-color: #F3F3F3;
+      text-align: center;
+    }
+
+    .container {
+      background-color: #FFFFFF;
+      border-radius: 4px;
+      padding: 30px;
+      width: 600px;
+      margin: auto;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 6px 12px;
+      margin-bottom: 0;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.42857143;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background-image: none;
+      border-radius: 4px;
+      color: #fff;
+      background-color: #4f99d9;
+      border-color: #418fd3;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>请验证您的邮箱地址,完成VIP升级流程</h2>
+    <form action="/search-post/" method="post">
+      <input type="text" name="q">
+      <input type="submit" value="提交">
+    </form>
+    <p>如果您不知道该网页的可靠性，请忽略此邮件。</p>
+  </div>
+</body>
+
+</html>

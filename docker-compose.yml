@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - '80:80'
+    environment:
+      TZ: Asia/Shanghai
+    expose:
+      - '80'
+    volumes:
+      - /home/ubuntu/app/nginx/html/:/usr/share/nginx/html
+      - /home/ubuntu/app/nginx/nginx.conf:/etc/nginx/conf.d
+      - /home/ubuntu/app/chatgpt-django/static:/app/chatgpt-django/static  # 映射宿主机的django的static静态资源文件
+
+    networks:
+      network:
+        ipv4_address: 177.8.0.12
+
+  chatgpt-django:
+    container_name: chatgpt-django
+    image: chatgpt-django:latest
+    build:
+      context: .             #表示dockerfile文件存在的目录
+      dockerfile: Dockerfile    #表示dockerfile的文件名
+    command: python manage.py runserver 0.0.0.0:9004
+    ports:
+      - 9004:9004
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /home/ubuntu/app/chatgpt-django:/app
+    expose:
+      - "9004"
+    networks:
+      network:
+        ipv4_address: 177.8.0.11
+        
+networks:
+  network:
+    ipam:
+      driver: default
+      config:
+        - subnet: '177.8.0.0/16'
+
