@@ -31,13 +31,11 @@ class Audio(ModelViewSet,QueryArgumentsMixin):
   permission_classes = [permissions.IsAuthenticated, LimitedAccessPermission] # 登录授权才可以访问接口
 
   def create(self, request):
-    openai_chat_api_3_5_config = Config.objects.filter(config_Code='openai_chat_api_3_5')
-    openai_chat_api_3_5_config_dict = {}
-    for i in openai_chat_api_3_5_config:
-      openai_chat_api_3_5_config_dict.update({i.key: i.value})
+    openai_api_config = Config.objects.filter(key__contains="OPENAI_API")
+    openai_api_config_dict = dict(openai_api_config.values_list('key', 'value'))
     client = OpenAI(
-      api_key = openai_chat_api_3_5_config_dict.get("OPENAI_API_KEY", 'None'),
-      base_url = openai_chat_api_3_5_config_dict.get("OPENAI_API_BASE_URL", 'None')
+      api_key = openai_api_config_dict.get("OPENAI_API_KEY", 'None'),
+      base_url = openai_api_config_dict.get("OPENAI_API_BASE_URL", 'None')
     )
     audio_file = request.FILES['file']
     baseUserId = request.user.id
@@ -55,14 +53,12 @@ class Audio(ModelViewSet,QueryArgumentsMixin):
     return Response(data={"text": transcript.text})
 
   def speech(self, request):
-    openai_chat_api_3_5_config = Config.objects.filter(config_Code='openai_chat_api_3_5')
-    openai_chat_api_3_5_config_dict = {}
-    for i in openai_chat_api_3_5_config:
-      openai_chat_api_3_5_config_dict.update({i.key: i.value})
+    openai_api_config = Config.objects.filter(key__contains="OPENAI_API")
+    openai_api_config_dict = dict(openai_api_config.values_list('key', 'value'))
     client = OpenAI(
-        api_key = openai_chat_api_3_5_config_dict.get("OPENAI_API_KEY", 'None'),
-        base_url = openai_chat_api_3_5_config_dict.get("OPENAI_API_BASE_URL", 'None')
-      )
+      api_key = openai_api_config_dict.get("OPENAI_API_KEY", 'None'),
+      base_url = openai_api_config_dict.get("OPENAI_API_BASE_URL", 'None')
+    )
     baseUserId = request.user.id
     speech_file_path = os.path.join(BASE_DIR, 'static', 'AudioFiles', f'{baseUserId-int(time.time())}.mp3')
 
