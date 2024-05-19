@@ -19,3 +19,5 @@ build/
 db.sqlite3*
 
 log/
+
+static/AudioFiles/*

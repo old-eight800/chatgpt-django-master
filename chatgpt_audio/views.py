@@ -60,7 +60,7 @@ class Audio(ModelViewSet,QueryArgumentsMixin):
       base_url = openai_api_config_dict.get("OPENAI_API_BASE_URL", 'None')
     )
     baseUserId = request.user.id
-    speech_file_path = os.path.join(BASE_DIR, 'static', 'AudioFiles', f'{baseUserId-int(time.time())}.mp3')
+    speech_file_path = os.path.join(BASE_DIR, 'static', 'AudioFiles', f'{baseUserId}-{int(time.time())}.mp3')
 
     response = client.audio.speech.create(
       model = request.data['model'],
